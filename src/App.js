@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './index.css';
 import checkbox from './checkbox.png'
 import circle from './blankcircle.png'
@@ -21,7 +21,7 @@ function App() {
     brand: "Cheeze-It",
     units: "21oz",
     quantity: 1,
-    isPurchased: true.valueOf,
+    isPurchased: false,
   },
   {
     item: "Wine",
@@ -33,6 +33,7 @@ function App() {
  ]); 
 
  const [inputValue, setInputValue] = useState("");
+ const [inputUnit, setUnitValue] = useState("");
  const [totalItemCount, setTotalItemCount] = useState(0);
 
  const handleAddButtonClick = () => {
@@ -40,12 +41,13 @@ function App() {
   const newItem = {
      item: inputValue,
      quantity: 1,
-     units: "",
+     units: inputUnit,
      isPurchased: false,
    }
    const newItems =[...items, newItem];
     setItems(newItems);
     setInputValue("");
+    setUnitValue("")
  }
 
 const handleQuantityIncrease = (index) => {
@@ -80,6 +82,9 @@ const calculateTotal =() => {
     <div className='main-container'>
       <div className='add-item-box'>
         <input value = {inputValue} onChange={(event)=> setInputValue(event.target.value)} className='add-item-input' placeholder='Add an item...' />
+      </div>
+      <div className="add-item-box">
+      <input value = {inputUnit} onChange={(event)=> setUnitValue(event.target.value)} className='add-item-input' placeholder='unit' />
        <button onClick={() => handleAddButtonClick()}>+</button>
        
       </div>
@@ -91,11 +96,14 @@ const calculateTotal =() => {
               <>
                 <img src ={checkbox} className="checkbox" />
                 <span className='completed'> {itemName.item}</span>
+                <span className='completed'> {itemName.units}</span>
+
               </>
             ) : (
               <>
                 <img src ={circle} className="circle" />
                 <span> {itemName.item}</span>
+                <span> {itemName.units}</span>
               </>
             )}
           </div>
